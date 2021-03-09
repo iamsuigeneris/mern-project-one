@@ -1,7 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const UserController = require('./controllers/UserController')
+const routes = require('./routes')
+const path = require("path")
 
 const app = express()
 
@@ -22,11 +23,8 @@ try {
     console.log(error)
 }
 
-app.get('/', (req,res) => {
-    res.send('Hello from express in Nodejs')
-})
-
-app.post('/register', UserController.store)
+app.use("/files", express.static(path.resolve(__dirname,"..", "files")))
+app.use(routes)
 
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
